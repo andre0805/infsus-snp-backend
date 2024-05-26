@@ -1,14 +1,17 @@
 package com.fer.snp.backend.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "djelatnik_specijalizacija")
 public class DjelatnikSpecijalizacija {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +26,4 @@ public class DjelatnikSpecijalizacija {
     private Specijalizacija specijalizacija;
 
     private int godina;
-
-    public DjelatnikSpecijalizacija(ZdravstveniDjelatnik zdravstveniDjelatnik, Specijalizacija specijalizacija, int godina) {
-        this.zdravstveniDjelatnik = zdravstveniDjelatnik;
-        this.specijalizacija = specijalizacija;
-        this.godina = godina;
-    }
 }

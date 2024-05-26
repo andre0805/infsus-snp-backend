@@ -8,20 +8,16 @@ import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "pacijent")
 public class Pacijent extends Korisnik {
     private String oib;
     private int brojNedolazaka;
 
-    @OneToMany
+    @OneToMany(mappedBy = "pacijent", cascade = CascadeType.ALL)
     private List<Termin> zakazaniTermini;
-
-    public Pacijent(String ime, String prezime, String email, String lozinka, String oib, int brojNedolazaka) {
-        super(ime, prezime, email, lozinka);
-        this.oib = oib;
-        this.brojNedolazaka = brojNedolazaka;
-    }
 
     @Override
     public boolean equals(Object o) {

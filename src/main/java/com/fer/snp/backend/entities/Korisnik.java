@@ -1,6 +1,7 @@
 package com.fer.snp.backend.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +11,10 @@ import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "korisnik")
 public class Korisnik {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +24,6 @@ public class Korisnik {
     private String prezime;
     private String email;
     private String lozinka;
-
-    public Korisnik(String ime, String prezime, String email, String lozinka) {
-        this.ime = ime;
-        this.prezime = prezime;
-        this.email = email;
-        this.lozinka = lozinka;
-    }
 
     @Override
     public boolean equals(Object o) {

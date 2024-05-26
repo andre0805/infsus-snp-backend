@@ -2,6 +2,7 @@ package com.fer.snp.backend.entities;
 
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +11,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "podsjetnik")
 public class Podsjetnik {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +25,4 @@ public class Podsjetnik {
 
     private String vrsta;
     private LocalDateTime dateTime;
-
-    public Podsjetnik(Termin termin, String vrsta, LocalDateTime dateTime) {
-        this.termin = termin;
-        this.vrsta = vrsta;
-        this.dateTime = dateTime;
-    }
 }

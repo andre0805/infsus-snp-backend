@@ -2,6 +2,7 @@ package com.fer.snp.backend.entities;
 
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,23 +13,20 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "zdravstveni_djelatnik")
 public class ZdravstveniDjelatnik extends Korisnik {
     String telefonskiBroj;
 
     @ManyToOne
     private Ustanova ustanova;
 
-    @OneToMany
-    private List<Termin> zakzaniTermini;
-
     @OneToMany(mappedBy = "zdravstveniDjelatnik", cascade = CascadeType.ALL)
-    private Set<DjelatnikSpecijalizacija> specijalizacije = new HashSet<>();
+    private List<Termin> zakazaniTermini;
 
-    public ZdravstveniDjelatnik(String ime, String prezime, String email, String lozinka, String telefonskiBroj, Ustanova ustanova) {
-        super(ime, prezime, email, lozinka);
-        this.telefonskiBroj = telefonskiBroj;
-        this.ustanova = ustanova;
-    }
+    @ManyToOne
+    @JoinColumn(name = "specijalizacija_id")
+    private DjelatnikSpecijalizacija specijalizacija;
 }
