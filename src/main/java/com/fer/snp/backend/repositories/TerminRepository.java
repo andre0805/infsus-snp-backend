@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +31,25 @@ public interface TerminRepository extends JpaRepository<Termin, Long> {
             nativeQuery = false
     )
     List<Termin> findAllByKorisnikId(Long korisnikId);
+
+    @Query(
+            value = "SELECT * " +
+                    "FROM termin " +
+                    "WHERE zdravstveni_djelatnik_id = :zdravstveniDjelatnikId " +
+                        "AND EXTRACT(DAY FROM date_time) = EXTRACT(DAY FROM :dateTime) " +
+                        "AND EXTRACT(MONTH FROM date_time) = EXTRACT(MONTH FROM :dateTime) " +
+                        "AND EXTRACT(YEAR FROM date_time) = EXTRACT(YEAR FROM :dateTime)",
+            nativeQuery = true
+    )
+    List<Termin> findAllByZdravstveniDjelatnikIdAndDateTimeIs(Long zdravstveniDjelatnikId, LocalDateTime dateTime);
+
+    @Query(
+            value = "SELECT * " +
+                    "FROM termin " +
+                    "WHERE EXTRACT(DAY FROM date_time) = EXTRACT(DAY FROM :dateTime) " +
+                        "AND EXTRACT(MONTH FROM date_time) = EXTRACT(MONTH FROM :dateTime) " +
+                        "AND EXTRACT(YEAR FROM date_time) = EXTRACT(YEAR FROM :dateTime)",
+            nativeQuery = true
+    )
+    List<Termin> findAllByDateTimeIs(LocalDateTime dateTime);
 }
