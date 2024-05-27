@@ -16,8 +16,8 @@ public class Pacijent extends Korisnik {
     private String oib;
     private int brojNedolazaka;
 
-    @OneToMany(mappedBy = "pacijent", cascade = CascadeType.ALL)
-    private List<Termin> zakazaniTermini;
+    //@OneToMany(mappedBy = "pacijent", cascade = CascadeType.ALL)
+    //private List<Termin> zakazaniTermini;
 
     @Override
     public boolean equals(Object o) {

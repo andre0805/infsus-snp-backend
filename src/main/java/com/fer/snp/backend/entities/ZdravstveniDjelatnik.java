@@ -23,8 +23,8 @@ public class ZdravstveniDjelatnik extends Korisnik {
     @ManyToOne
     private Ustanova ustanova;
 
-    @OneToMany(mappedBy = "zdravstveniDjelatnik", cascade = CascadeType.ALL)
-    private List<Termin> zakazaniTermini;
+    //@OneToMany(mappedBy = "zdravstveniDjelatnik", cascade = CascadeType.ALL)
+    //private List<Termin> zakazaniTermini;
 
     @ManyToOne
     @JoinColumn(name = "specijalizacija_id")
