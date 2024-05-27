@@ -1,5 +1,7 @@
 package com.fer.snp.backend;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fer.snp.backend.controllers.HomeController;
 import com.fer.snp.backend.entities.*;
 import com.fer.snp.backend.repositories.KorisnikRepository;
@@ -18,8 +20,10 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,26 +63,26 @@ class SnpBackendApplicationTests {
 	}
 
 	@Test
-	void testHomeController() {
+	void testHomeController() throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
 		HomeController homeController = new HomeController(new MockAppointmentsService());
 
-		List<Termin> expected = new ArrayList<>();
-		expected.add(
-				new Termin(
-						1L,
-						LocalDateTime.of(2024, 6, 14, 12, 0),
-						"Pregled ramena",
-						new Status(2L, "ZAKAZAN"),
-						new Pacijent(),
-						new ZdravstveniDjelatnik()
-				)
-		);
+		List<Termin> expectedList = List.of(
+                new Termin(
+                        1L,
+                        LocalDateTime.of(2024, 6, 14, 12, 0),
+                        "Pregled ramena",
+                        new Status(2L, "ZAKAZAN"),
+                        new Pacijent(),
+                        new ZdravstveniDjelatnik()
+                )
+        );
 
-		System.out.println(expected);
+		String expected = objectMapper.writeValueAsString(expectedList);
 
-		ResponseEntity<List<Termin>> actual = (ResponseEntity<List<Termin>>) homeController.getAvailableAppointments(1L, "2024-06-14T00:00:00");
-		System.out.println(actual.getBody());
+		ResponseEntity<String> response = (ResponseEntity<String>) homeController.getAvailableAppointments(1L, "2024-06-14T00:00:00");
+		String actual = response.getBody();
 
-		assert(expected.equals(actual.getBody()));
+		assert(expected.equals(actual));
 	}
 }
